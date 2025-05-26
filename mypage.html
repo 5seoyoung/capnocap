@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>캡노캡 - 마이페이지</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: #f8f9fa;
+            color: #191f28;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #ffffff;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .header {
+            background: #ffffff;
+            padding: 16px 20px;
+            border-bottom: 1px solid #f2f4f6;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #191f28;
+        }
+
+        .settings-btn {
+            width: 44px;
+            height: 44px;
+            border: none;
+            background: #f2f4f6;
+            border-radius: 12px;
+            color: #4e5968;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-btn:active {
+            background: #e5e8eb;
+        }
+
+        .main-content {
+            padding: 24px 20px 100px;
+        }
+
+        .profile-card {
+            background: linear-gradient(135deg, #3182f6 0%, #1d4ed8 100%);
+            border-radius: 24px;
+            padding: 32px 24px;
+            color: white;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .profile-info {
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-avatar {
+            width: 64px;
+            height: 64px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .profile-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background: #00ff88;
+            border-radius: 50%;
+        }
+
+        .status-text {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .pregnancy-details {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .pregnancy-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            text-align: center;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-number {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .menu-section {
+            background: #ffffff;
+            border: 1px solid #f2f4f6;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #191f28;
+            padding: 20px 20px 12px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #f8f9fa;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-item:active {
+            background: #f8f9fa;
+        }
+
+        .menu-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .health-icon { background: #e8f5e8; }
+        .history-icon { background: #e8f3ff; }
+        .reminder-icon { background: #fff4e6; }
+        .support-icon { background: #f0f9ff; }
+        .privacy-icon { background: #fef7ff; }
+        .about-icon { background: #f8f9fa; }
+
+        .menu-text {
+            flex: 1;
+        }
+
+        .menu-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #191f28;
+            margin-bottom: 2px;
+        }
+
+        .menu-desc {
+            font-size: 13px;
+            color: #6b7684;
+        }
+
+        .menu-badge {
+            padding: 4px 8px;
+            background: #ff4757;
+            color: white;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-right: 8px;
+        }
+
+        .arrow-icon {
+            color: #8b95a1;
+            font-size: 16px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .stats-card {
+            background: #ffffff;
+            border: 1px solid #f2f4f6;
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stats-number {
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .stats-number.safe { color: #00c73c; }
+        .stats-number.total { color: #3182f6; }
+
+        .stats-label {
+            font-size: 14px;
+            color: #6b7684;
+            font-weight: 500;
+        }
+
+        .achievement-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 24px;
+            color: white;
+            margin-bottom: 24px;
+        }
+
+        .achievement-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .achievement-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .achievement-info {
+            flex: 1;
+        }
+
+        .achievement-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .achievement-desc {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+
+        .achievement-progress {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: white;
+            height: 100%;
+            width: 75%;
+            border-radius: 8px;
+            transition: width 0.3s ease;
+        }
+
+        .version-info {
+            text-align: center;
+            padding: 24px;
+            color: #8b95a1;
+            font-size: 13px;
+        }
+
+        .app-version {
+            margin-bottom: 8px;
+        }
+
+        .copyright {
+            font-size: 12px;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            background: #ffffff;
+            border-top: 1px solid #f2f4f6;
+            padding: 8px 0 24px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: #8b95a1;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 12px;
+        }
+
+        .nav-item.active {
+            color: #3182f6;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 2px;
+        }
+
+        @media (max-width: 400px) {
+            .container, .bottom-nav {
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-top">
+                <div class="header-title">마이페이지</div>
+                <button class="settings-btn">⚙️</button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="profile-card">
+                <div class="profile-info">
+                    <div class="profile-avatar">👤</div>
+                    <div class="profile-name">김예은님</div>
+                    <div class="profile-status">
+                        <div class="status-indicator"></div>
+                        <div class="status-text">임신 24주차 · 건강 상태 양호</div>
+                    </div>
+                    <div class="pregnancy-details">
+                        <div class="pregnancy-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">24주</div>
+                                <div class="stat-label">현재 주차</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">6개월</div>
+                                <div class="stat-label">임신 개월</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">중기</div>
+                                <div class="stat-label">삼분기</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stats-card">
+                    <div class="stats-number total">47</div>
+                    <div class="stats-label">총 검사 횟수</div>
+                </div>
+                <div class="stats-card">
+                    <div class="stats-number safe">39</div>
+                    <div class="stats-label">안전한 복용</div>
+                </div>
+            </div>
+
+            <div class="achievement-card">
+                <div class="achievement-header">
+                    <div class="achievement-icon">🏆</div>
+                    <div class="achievement-info">
+                        <div class="achievement-title">안전한 복약 달성률</div>
+                        <div class="achievement-desc">이번 달 83%의 안전한 복약을 실천하고 있어요</div>
+                    </div>
+                </div>
+                <div class="achievement-progress">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="menu-section">
+                <div class="section-title">건강 관리</div>
+                
+                <div class="menu-item" onclick="editHealth()">
+                    <div class="menu-content">
+                        <div class="menu-icon health-icon">🤱</div>
+                        <div class="menu-text">
+                            <div class="menu-title">임신 정보 수정</div>
+                            <div class="menu-desc">출산예정일, 임신 주차 업데이트</div>
+                        </div>
+                    </div>
+                    <div class="arrow-icon">›</div>
+                </div>
+
+                <div class="menu-item" onclick="viewHistory()">
+                    <div class="menu-content">
+                        <div class="menu-icon history-icon">📊</div>
+                        <div class="menu-text">
+                            <div class="menu-title">복약 히스토리</div>
+                            <div class="menu-desc">지금까지의 모든 검사 기록</div>
+                        </div>
+                    </div>
+                    <div class="arrow-icon">›</div>
+                </div>
+
+                <div class="menu-item" onclick="setReminders()">
+                    <div class="menu-content">
+                        <div class="menu-icon reminder-icon">🔔</div>
+                        <div class="menu-text">
+                            <div class="menu-title">복약 알림 설정</div>
+                            <div class="menu-desc">정기 검사 및 복용 알림</div>
+                        </div>
+                    </div>
+                    <div class="menu-badge">NEW</div>
+                    <div class="arrow-icon">›</div>
+                </div>
+            </div>
+
+            <div class="menu-section">
+                <div class="section-title">고객 지원</div>
+                
+                <div class="menu-item" onclick="contactSupport()">
+                    <div class="menu-content">
+                        <div class="menu-icon support-icon">💬</div>
+                        <div class="menu-text">
+                            <div class="menu-title">고객센터</div>
+                            <div class="menu-desc">문의사항 및 기술 지원</div>
+                        </div>
+                    </div>
+                    <div class="arrow-icon">›</div>
+                </div>
+
+                <div class="menu-item" onclick="sendFeedback()">
+                    <div class="menu-content">
+                        <div class="menu-icon support-icon">📝</div>
+                        <div class="menu-text">
+                            <div class="menu-title">피드백 보내기</div>
+                            <div class="menu-desc">서비스 개선 의견 제안</div>
+                        </div>
+                    </div>
+                    <div class="arrow-icon">›</div>
+                </div>
+
+                <div class="menu-item" onclick="viewFAQ()">
+                    <div class="menu-content">
+                        <div class="menu-icon support-icon">❓</div>
+                        <div class="menu-text">
+                            <div class="menu-title">자주 묻는 질문</div>
+                            <div class="menu-desc">FAQ 및 사용 가이드</div>
+                        </div>
+                    </div>
+                    <div class="arrow-icon">›</div>
+                </div>
+            </div>
+
+            <div class="menu-section">
+                <div class="section-title">설정 및 정보</div>
+                
+                <div class="menu-item" onclick="privacySettings()">
+                    <div class="menu-content">
+                        <div class="menu-icon privacy-icon">🔒</div>
+                        <div class="menu-text">
+                            <div class="menu-title">개인정보 설정</div>
+                            <div class="menu-desc">데이터 보안 및 개인정보 관리</div>
+                        </div>
+                    </div>
+                    <div class="arrow-icon">›</div>
+                </div>
+
+                <div class="menu-item" onclick="viewTerms()">
+                    <div class="menu-content">
+                        <div class="menu-icon about-icon">📄</div>
+                        <div class="menu-text">
+                            <div class="menu-title">이용약관</div>
+                            <div class="menu-desc">서비스 이용약관 및 개인정보처리방침</div>
+                        </div>
+                    </div>
+                    <div class="arrow-icon">›</div>
+                </div>
+
+                <div class="menu-item" onclick="aboutApp()">
+                    <div class="menu-content">
+                        <div class="menu-icon about-icon">ℹ️</div>
+                        <div class="menu-text">
+                            <div class="menu-title">앱 정보</div>
+                            <div class="menu-desc">버전 정보 및 업데이트</div>
+                        </div>
+                    </div>
+                    <div class="arrow-icon">›</div>
+                </div>
+            </div>
+
+            <div class="version-info">
+                <div class="app-version">캡노캡 v1.2.1</div>
+                <div class="copyright">© 2024 Capsule, No Cap! Team</div>
+            </div>
+        </div>
+
+        <div class="bottom-nav">
+            <div class="nav-item">
+                <div class="nav-icon">🏠</div>
+                <div>홈</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📊</div>
+                <div>리포트</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📚</div>
+                <div>가이드</div>
+            </div>
+            <div class="nav-item active">
+                <div class="nav-icon">👤</div>
+                <div>마이</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 프로필 편집 관련 함수
+        function editHealth() {
+            alert('임신 정보 수정\n\n• 출산예정일 변경\n• 현재 임신 주차 업데이트\n• 건강 상태 정보 수정\n\n정확한 정보 입력으로 더 정밀한 AI 분석을 받아보세요.');
+        }
+
+        function viewHistory() {
+            window.location.href = 'report.html';
+        }
+
+        function setReminders() {
+            alert('🔔 복약 알림 설정\n\n• 정기 약물 안전성 재검사 알림\n• 임신 주차별 주의사항 알림\n• 위험 약물 복용 방지 알림\n\n안전한 복약을 위한 맞춤 알림을 설정해보세요.');
+        }
+
+        // 고객 지원 관련 함수
+        function contactSupport() {
+            alert('고객센터\n\n📞 전화: 1588-0000\n📧 이메일: support@capnocap.com\n💬 채팅: 평일 09:00-18:00\n\n캡노캡 AI 분석 결과에 대한 궁금증이나 기술적 문제를 도와드립니다.');
+        }
+
+        function sendFeedback() {
+            const feedback = prompt('캡노캡 서비스 개선을 위한 소중한 의견을 들려주세요:');
+            if (feedback && feedback.trim()) {
+                alert('피드백이 전송되었습니다!\n\n보내주신 의견을 바탕으로 더 나은 AI 기반 복약 안전 서비스를 만들어가겠습니다. 감사합니다!');
+            }
+        }
+
+        function viewFAQ() {
+            alert('자주 묻는 질문\n\nQ. AI 분석 결과는 얼마나 정확한가요?\nA. ResNet, BioBERT 등 최신 AI 모델을 사용하며, 지속적으로 정확도를 개선하고 있습니다.\n\nQ. 의사 처방 없이 캡노캡만 믿어도 되나요?\nA. 캡노캡은 참고용 도구입니다. 중요한 의료 결정은 반드시 의료진과 상담하세요.');
+        }
+
+        // 설정 관련 함수
+        function privacySettings() {
+            alert('개인정보 설정\n\n• 데이터 수집 및 이용 동의 관리\n• 복약 기록 보관 기간 설정\n• 계정 탈퇴 및 데이터 삭제\n\n개인정보는 안전하게 암호화되어 보관됩니다.');
+        }
+
+        function viewTerms() {
+            alert('이용약관 및 개인정보처리방침\n\n• 서비스 이용약관\n• 개인정보처리방침\n• AI 분석 데이터 활용 정책\n• 의료정보 보안 정책\n\n최종 업데이트: 2024.01.15');
+        }
+
+        function aboutApp() {
+            alert('📱 캡노캡 앱 정보\n\n버전: v1.2.1\n업데이트: 2024.01.20\n\n🤖 AI 기술 스택:\n• ResNet: 알약 이미지 인식\n• BioBERT: 의료 텍스트 분석\n• GPT API: 자연어 설명 생성\n\n개발: 캡노캡 팀');
+        }
+
+        // 네비게이션 - 수정된 부분!
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+                
+                const navText = this.querySelector('div:last-child').textContent;
+                switch (navText) {
+                    case '홈':
+                        window.location.href = 'index.html';
+                        break;
+                    case '리포트':
+                        window.location.href = 'report.html';
+                        break;
+                    case '가이드':
+                        window.location.href = 'guide.html';
+                        break;
+                    case '마이':
+                        // 현재 페이지이므로 아무 동작 안함
+                        break;
+                }
+            });
+        });
+
+        // 설정 버튼
+        document.querySelector('.settings-btn').addEventListener('click', function() {
+            alert('⚙️ 설정\n\n• 알림 설정\n• 언어 설정\n• 테마 설정\n• 데이터 동기화\n• 캐시 정리');
+        });
+    </script>
+</body>
+</html>

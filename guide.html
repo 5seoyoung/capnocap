@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>캡노캡 - 복약 안전 가이드</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            background: #f8f9fa;
+            color: #191f28;
+            line-height: 1.5;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: #ffffff;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        .header {
+            background: #ffffff;
+            padding: 16px 20px;
+            border-bottom: 1px solid #f2f4f6;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        
+        .back-btn {
+            width: 44px;
+            height: 44px;
+            border: none;
+            background: #f2f4f6;
+            border-radius: 12px;
+            color: #4e5968;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .back-btn:active {
+            background: #e5e8eb;
+        }
+        
+        .header-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #191f28;
+        }
+        
+        .search-btn {
+            width: 44px;
+            height: 44px;
+            border: none;
+            background: #f2f4f6;
+            border-radius: 12px;
+            color: #4e5968;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .pregnancy-status {
+            background: #3182f6;
+            border-radius: 16px;
+            padding: 16px 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .status-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .current-week {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .trimester {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .week-icon {
+            font-size: 32px;
+        }
+        
+        .main-content {
+            padding: 24px 20px 100px;
+        }
+        
+        .category-tabs {
+            display: flex;
+            background: #f2f4f6;
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 24px;
+            overflow-x: auto;
+        }
+        
+        .category-tab {
+            flex: 1;
+            min-width: 80px;
+            padding: 12px 8px;
+            border: none;
+            background: transparent;
+            color: #6b7684;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        
+        .category-tab.active {
+            background: #ffffff;
+            color: #3182f6;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section {
+            margin-bottom: 32px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #191f28;
+            margin-bottom: 16px;
+        }
+        
+        .trimester-guide {
+            background: #ffffff;
+            border: 1px solid #f2f4f6;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .trimester-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .trimester-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .trimester-1 {
+            background: #fff4e6;
+        }
+        
+        .trimester-2 {
+            background: #e8f5e8;
+        }
+        
+        .trimester-3 {
+            background: #ffeaea;
+        }
+        
+        .trimester-info {
+            flex: 1;
+        }
+        
+        .trimester-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #191f28;
+            margin-bottom: 4px;
+        }
+        
+        .trimester-period {
+            font-size: 14px;
+            color: #6b7684;
+        }
+        
+        .trimester-content {
+            margin-top: 16px;
+        }
+        
+        .key-points {
+            margin-bottom: 16px;
+        }
+        
+        .key-point {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .point-bullet {
+            width: 6px;
+            height: 6px;
+            background: #3182f6;
+            border-radius: 50%;
+            margin-top: 6px;
+            flex-shrink: 0;
+        }
+        
+        .drug-categories {
+            margin-top: 16px;
+        }
+        
+        .drug-category {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .category-status {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .safe-category {
+            background: #e8f5e8;
+            color: #00c73c;
+        }
+        
+        .caution-category {
+            background: #fff4e6;
+            color: #ff8f00;
+        }
+        
+        .danger-category {
+            background: #ffeaea;
+            color: #f04452;
+        }
+        
+        .category-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #191f28;
+        }
+        
+        .category-drugs {
+            font-size: 13px;
+            color: #6b7684;
+            margin-bottom: 8px;
+        }
+        
+        .category-reason {
+            font-size: 13px;
+            color: #4e5968;
+            line-height: 1.4;
+        }
+        
+        .emergency-card {
+            background: linear-gradient(135deg, #f04452 0%, #ff6b6b 100%);
+            border-radius: 20px;
+            padding: 24px;
+            color: white;
+            margin-bottom: 24px;
+        }
+        
+        .emergency-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .emergency-content {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+        
+        .emergency-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .emergency-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .emergency-btn:active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .faq-section {
+            background: #ffffff;
+            border: 1px solid #f2f4f6;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid #f2f4f6;
+            padding-bottom: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .faq-question {
+            font-size: 15px;
+            font-weight: 600;
+            color: #191f28;
+            margin-bottom: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: between;
+        }
+        
+        .faq-answer {
+            font-size: 14px;
+            color: #6b7684;
+            line-height: 1.5;
+        }
+        
+        .tips-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 24px;
+            color: white;
+            margin-bottom: 24px;
+        }
+        
+        .tips-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        
+        .tip-number {
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .tip-content {
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            background: #ffffff;
+            border-top: 1px solid #f2f4f6;
+            padding: 8px 0 24px;
+            display: flex;
+            justify-content: space-around;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: #8b95a1;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 12px;
+        }
+        
+        .nav-item.active {
+            color: #3182f6;
+        }
+        
+        .nav-icon {
+            font-size: 24px;
+            margin-bottom: 2px;
+        }
+        
+        @media (max-width: 400px) {
+            .container,
+            .bottom-nav {
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-top">
+                <button class="back-btn">←</button>
+                <div class="header-title">복약 안전 가이드</div>
+                <button class="search-btn">🔍</button>
+            </div>
+
+            <div class="pregnancy-status">
+                <div class="status-info">
+                    <div class="current-week">임신 24주차</div>
+                    <div class="trimester">임신 6개월 · 중기</div>
+                </div>
+                <div class="week-icon">🤱</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="category-tabs">
+                <button class="category-tab active">시기별</button>
+                <button class="category-tab">약물별</button>
+                <button class="category-tab">응급상황</button>
+                <button class="category-tab">FAQ</button>
+                <button class="category-tab">팁</button>
+            </div>
+
+            <div class="section">
+                <div class="section-title">임신 시기별 복약 가이드</div>
+
+                <div class="trimester-guide">
+                    <div class="trimester-header">
+                        <div class="trimester-icon trimester-1">🌱</div>
+                        <div class="trimester-info">
+                            <div class="trimester-name">임신 초기</div>
+                            <div class="trimester-period">1~13주 (1~3개월)</div>
+                        </div>
+                    </div>
+                    <div class="trimester-content">
+                        <div class="key-points">
+                            <div class="key-point">
+                                <div class="point-bullet"></div>
+                                <span>태아의 주요 장기가 형성되는 가장 중요한 시기</span>
+                            </div>
+                            <div class="key-point">
+                                <div class="point-bullet"></div>
+                                <span>기형 유발 가능성이 가장 높은 시기</span>
+                            </div>
+                            <div class="key-point">
+                                <div class="point-bullet"></div>
+                                <span>모든 약물 복용 전 반드시 의사와 상담</span>
+                            </div>
+                        </div>
+
+                        <div class="drug-categories">
+                            <div class="drug-category">
+                                <div class="category-header">
+                                    <div class="category-status safe-category">안전</div>
+                                    <div class="category-name">엽산, 비타민</div>
+                                </div>
+                                <div class="category-drugs">엽산, 종합비타민, 철분제</div>
+                                <div class="category-reason">태아 발달에 필수적인 영양소</div>
+                            </div>
+
+                            <div class="drug-category">
+                                <div class="category-header">
+                                    <div class="category-status danger-category">금기</div>
+                                    <div class="category-name">기형유발 약물</div>
+                                </div>
+                                <div class="category-drugs">이소트레티노인, 발프로산, 리튬</div>
+                                <div class="category-reason">태아 기형 및 발달 장애 위험</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trimester-guide">
+                    <div class="trimester-header">
+                        <div class="trimester-icon trimester-2">🌿</div>
+                        <div class="trimester-info">
+                            <div class="trimester-name">임신 중기</div>
+                            <div class="trimester-period">14~27주 (4~6개월)</div>
+                        </div>
+                    </div>
+                    <div class="trimester-content">
+                        <div class="key-points">
+                            <div class="key-point">
+                                <div class="point-bullet"></div>
+                                <span>상대적으로 안정적인 시기</span>
+                            </div>
+                            <div class="key-point">
+                                <div class="point-bullet"></div>
+                                <span>필요시 안전한 약물 사용 가능</span>
+                            </div>
+                            <div class="key-point">
+                                <div class="point-bullet"></div>
+                                <span>치과 치료 등 의료 시술 적기</span>
+                            </div>
+                        </div>
+
+                        <div class="drug-categories">
+                            <div class="drug-category">
+                                <div class="category-header">
+                                    <div class="category-status safe-category">안전</div>
+                                    <div class="category-name">해열진통제</div>
+                                </div>
+                                <div class="category-drugs">아세트아미노펜 (타이레놀)</div>
+                                <div class="category-reason">임신 중 가장 안전한 해열진통제</div>
+                            </div>
+
+                            <div class="drug-category">
+                                <div class="category-header">
+                                    <div class="category-status caution-category">주의</div>
+                                    <div class="category-name">항생제</div>
+                                </div>
+                                <div class="category-drugs">페니실린, 아목시실린 (안전) / 테트라사이클린 (위험)</div>
+                                <div class="category-reason">종류에 따라 안전성이 다름</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trimester-guide">
+                    <div class="trimester-header">
+                        <div class="trimester-icon trimester-3">🌳</div>
+                        <div class="trimester-info">
+                            <div class="trimester-name">임신 후기</div>
+                            <div class="trimester-period">28~40주 (7~10개월)</div>
+                        </div>
+                    </div>
+                    <div class="trimester-content">
+                        <div class="key-points">
+                            <div class="key-point">
+                                <div class="point-bullet"></div>
+                                <span>조산 및 출혈 위험 주의</span>
+                            </div>
+                            <div class="key-point">
+                                <div class="point-bullet"></div>
+                                <span>신생아에게 영향을 줄 수 있는 약물 금기</span>
+                            </div>
+                            <div class="key-point">
+                                <div class="point-bullet"></div>
+                                <span>분만 전 약물 중단 시기 확인</span>
+                            </div>
+                        </div>
+
+                        <div class="drug-categories">
+                            <div class="drug-category">
+                                <div class="category-header">
+                                    <div class="category-status danger-category">금기</div>
+                                    <div class="category-name">NSAIDs</div>
+                                </div>
+                                <div class="category-drugs">이부프로펜, 아스피린, 나프록센</div>
+                                <div class="category-reason">동맥관 조기폐쇄, 양수과소증 위험</div>
+                            </div>
+
+                            <div class="drug-category">
+                                <div class="category-header">
+                                    <div class="category-status caution-category">주의</div>
+                                    <div class="category-name">혈압약</div>
+                                </div>
+                                <div class="category-drugs">ACE억제제, ARB</div>
+                                <div class="category-reason">태아 신장 발달에 영향</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="emergency-card">
+                <div class="emergency-title">
+                    🚨 응급상황 대처법
+                </div>
+                <div class="emergency-content">
+                    금기 약물을 복용했거나 복용 후 이상 증상이 나타나면 즉시 의료진과 상담하세요.
+                </div>
+                <div class="emergency-actions">
+                    <button class="emergency-btn">119 신고</button>
+                    <button class="emergency-btn">병원 연결</button>
+                </div>
+            </div>
+
+            <div class="faq-section">
+                <div class="section-title">자주 묻는 질문</div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Q. 임신 중 두통약 복용해도 되나요?</div>
+                    <div class="faq-answer">아세트아미노펜(타이레놀)은 임신 중 가장 안전한 해열진통제입니다. 이부프로펜은 임신 후기에는 피해야 합니다.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Q. 감기약을 먹어도 될까요?</div>
+                    <div class="faq-answer">종합감기약보다는 증상별로 안전한 단일 성분 약물을 선택하는 것이 좋습니다. 반드시 의사와 상담 후 복용하세요.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Q. 영양제는 언제부터 복용하나요?</div>
+                    <div class="faq-answer">엽산은 임신 계획 시부터, 종합비타민과 철분제는 임신 확인 후부터 복용을 권장합니다.</div>
+                </div>
+            </div>
+
+            <div class="tips-card">
+                <div class="tips-title">
+                    💡 안전한 복약을 위한 팁
+                </div>
+
+                <div class="tip-item">
+                    <div class="tip-number">1</div>
+                    <div class="tip-content">모든 약물 복용 전 캡노캡 앱으로 안전성을 확인하세요</div>
+                </div>
+
+                <div class="tip-item">
+                    <div class="tip-number">2</div>
+                    <div class="tip-content">복용 중인 모든 약물과 영양제를 산부인과 의사에게 알려주세요</div>
+                </div>
+
+                <div class="tip-item">
+                    <div class="tip-number">3</div>
+                    <div class="tip-content">약물 복용 기록을 꾸준히 관리하여 패턴을 파악하세요</div>
+                </div>
+
+                <div class="tip-item">
+                    <div class="tip-number">4</div>
+                    <div class="tip-content">의사 처방 없이 임의로 약물을 중단하지 마세요</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-nav">
+            <div class="nav-item">
+                <div class="nav-icon">🏠</div>
+                <div>홈</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">📊</div>
+                <div>리포트</div>
+            </div>
+            <div class="nav-item active">
+                <div class="nav-icon">📚</div>
+                <div>가이드</div>
+            </div>
+            <div class="nav-item">
+                <div class="nav-icon">👤</div>
+                <div>마이</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 카테고리 탭 전환
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+
+                // 실제 구현에서는 여기서 해당 카테고리 콘텐츠를 로드
+                console.log('Category changed to:', this.textContent);
+            });
+        });
+
+        // 네비게이션 - 수정된 부분!
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+
+                const navText = this.querySelector('div:last-child').textContent;
+                switch (navText) {
+                    case '홈':
+                        window.location.href = 'index.html';
+                        break;
+                    case '리포트':
+                        window.location.href = 'report.html';
+                        break;
+                    case '가이드':
+                        // 현재 페이지이므로 아무 동작 안함
+                        break;
+                    case '마이':
+                        window.location.href = 'mypage.html';
+                        break;
+                }
+            });
+        });
+
+        // 뒤로가기
+        document.querySelector('.back-btn').addEventListener('click', function() {
+            window.history.back();
+        });
+
+        // 응급상황 버튼
+        document.querySelectorAll('.emergency-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.textContent.includes('119')) {
+                    if (confirm('119에 연결하시겠습니까?')) {
+                        alert('응급전화 연결 중...');
+                    }
+                } else {
+                    alert('가까운 병원을 찾고 있습니다...');
+                }
+            });
+        });
+
+        // FAQ 항목 클릭시 상세 정보
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const answer = this.nextElementSibling;
+                // 실제 구현에서는 토글 기능 추가
+                console.log('FAQ clicked:', this.textContent);
+            });
+        });
+    </script>
+</body>
+
+</html>
